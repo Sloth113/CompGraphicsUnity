@@ -33,6 +33,7 @@ Shader "FX/RadialBlur"
 		uniform half _BlurWidth;
 		uniform half _imgWidth;
 		uniform half _imgHeight;
+		half _clearSize;
 
 		half4 frag(v2f_img i) : COLOR
 			{
@@ -60,21 +61,17 @@ Shader "FX/RadialBlur"
 				//normalize direction
 				dir = dir / dist;
 
-				//additional samples towards center of screen
+				//additional samples away from center of screen
 				half4 sum = color;
 				for (int n = 0; n < 10; n++)
 				{
 					sum += tex2D(_MainTex, i.uv + dir * samples[n] * _BlurWidth * _imgWidth);
 				}
 
-				//eleven samples...
+				//Average colour
 				sum *= 1.0 / 11.0;
 
 				//weighten blur depending on distance to screen center
-				/*
-				half t = dist * _BlurStrength / _imgWidth;
-				t = clamp(t, 0.0, 1.0);
-				*/
 				half t = saturate(dist * _BlurStrength);
 
 				//blend original with blur

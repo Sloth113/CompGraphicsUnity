@@ -28,6 +28,8 @@ public class PostProcess : MonoBehaviour {
         _materail.SetFloat("_imgHeight", ImageWidth);
         _materail.SetFloat("_imgWidth", ImageHeight);
 
+        _materail.SetFloat("_clearSize", 10);
+
         Graphics.Blit(source, destination, _materail);
 
 

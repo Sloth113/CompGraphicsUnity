@@ -31,9 +31,9 @@ public class FollowCam : MonoBehaviour {
         {
             if (_lastMouseX > 0 || _lastMouseY > 0)
             {
-                // TODO - this causes weird jumps if you lose focus and regain it.
+                //
                 float deltaX = Input.mousePosition.x - _lastMouseX;
-                float deltaY = Input.mousePosition.y - _lastMouseY;
+                float deltaY =  _lastMouseY - Input.mousePosition.y;
 
                 // set the camera's rotation
                 Vector3 angles = transform.eulerAngles + (Vector3.right * deltaY + Vector3.up * deltaX) * Time.deltaTime * _speed;
