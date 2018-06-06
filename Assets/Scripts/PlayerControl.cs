@@ -5,14 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControl : MonoBehaviour {
     private CharacterController _controller;
+    private Animator _animator;
     public float _speed = 5;
     public float _jumpForce = 10;
     private float _jumpingVel = 0;
     public bool _isGrounded = false;
     private bool _jumping = false;
+    private float _dbugSpeed = 0;
 	// Use this for initialization
 	void Start () {
         _controller = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -40,22 +43,30 @@ public class PlayerControl : MonoBehaviour {
         Vector3 move = new Vector3(0,0,0);
         move += camForward.normalized * Input.GetAxis("Vertical") * speed; 
         move += camRight.normalized * Input.GetAxis("Horizontal") * speed;
+        
         move += Physics.gravity;
-        if (Input.GetKey(KeyCode.Space) && _isGrounded && !_jumping)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _jumping = true;
-            _jumpingVel = _jumpForce;
-        }
-        if (_jumping)
-        {
-            _jumpingVel += Physics.gravity.y * Time.deltaTime;
-            move.y = _jumpingVel;
+            _animator.SetTrigger("Shoot");
         }
         if(_isGrounded && move.y <= 0)
         {
             move.y = 0;
             _jumping = false;
         }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            move *= 1.2f;
+        }
+
+        _dbugSpeed = move.magnitude / _speed;
+        _animator.SetFloat("Speed", move.magnitude / _speed);
         _controller.Move(move * Time.deltaTime);
-	}
+
+        
+    }
+    private void OnGUI()
+    {
+        GUI.TextArea(new Rect(10, 10, 40, 20), _dbugSpeed.ToString());
+    }
 }
