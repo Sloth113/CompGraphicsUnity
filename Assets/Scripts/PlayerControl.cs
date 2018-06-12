@@ -12,6 +12,9 @@ public class PlayerControl : MonoBehaviour {
     public bool _isGrounded = false;
     private bool _jumping = false;
     private float _dbugSpeed = 0;
+    private int _hitIndex = 1;
+    private float _hitTimer = 0;
+    public float _hitCooldown = 2;
 	// Use this for initialization
 	void Start () {
         _controller = GetComponent<CharacterController>();
@@ -40,14 +43,42 @@ public class PlayerControl : MonoBehaviour {
         camForward.y = 0;
         Vector3 camRight = Camera.main.transform.right;
         camForward.y = 0;
+        
         Vector3 move = new Vector3(0,0,0);
+        Vector3 inputForward = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (inputForward.magnitude > 0)
+        {
+            transform.rotation = Quaternion.LookRotation(inputForward);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y + transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+
         move += camForward.normalized * Input.GetAxis("Vertical") * speed; 
         move += camRight.normalized * Input.GetAxis("Horizontal") * speed;
         
         move += Physics.gravity;
+
+        
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _animator.SetTrigger("Shoot");
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            _animator.SetInteger("HitNo", _hitIndex);
+            Camera.main.GetComponent<BlurEffect>().HitBlur();
+        }
+        if (_hitIndex > 0)
+        {
+            if (_hitTimer > _hitCooldown)
+            {
+                _hitIndex = 1;
+                _hitTimer = 0;
+            }
+            else
+            {
+                _hitTimer += Time.deltaTime;
+            }
         }
         if(_isGrounded && move.y <= 0)
         {
@@ -59,14 +90,31 @@ public class PlayerControl : MonoBehaviour {
             move *= 1.2f;
         }
 
+
+
         _dbugSpeed = move.magnitude / _speed;
-        _animator.SetFloat("Speed", move.magnitude / _speed);
-        _controller.Move(move * Time.deltaTime);
+        _animator.SetFloat("Speed", inputForward.magnitude);
+        _controller.Move(transform.forward * inputForward.magnitude * _speed * Time.deltaTime);
 
         
     }
     private void OnGUI()
     {
         GUI.TextArea(new Rect(10, 10, 40, 20), _dbugSpeed.ToString());
+    }
+    
+    private void OnAnimatorIK(int layerIndex)
+    {
+        Debug.Log("HI");
+        Vector3 camForward = Camera.main.transform.forward * 100;
+        _animator.SetLookAtWeight(1);
+        _animator.SetLookAtPosition(camForward);
+    }
+
+    public void SetHit(int i)
+    {
+        _hitIndex = i;
+        _hitTimer = 0;
+        _animator.SetInteger("HitNo", 0);
     }
 }
