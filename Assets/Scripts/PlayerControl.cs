@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : MonoBehaviour, IHitable {
     private CharacterController _controller;
     private Animator _animator;
     public float _speed = 5;
@@ -128,5 +128,16 @@ public class PlayerControl : MonoBehaviour {
         Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
         body.velocity = pushDir * 10;
 
+    }
+
+    public void Hit()
+    {
+        Hit(1);
+    }
+
+    public void Hit(int amt)
+    {
+        _animator.SetInteger("HitNo", _hitIndex);
+        Camera.main.GetComponent<BlurEffect>().HitBlur();
     }
 }

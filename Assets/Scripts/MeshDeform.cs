@@ -34,7 +34,7 @@ public class MeshDeform : MonoBehaviour {
 
         foreach(Vector3 v in mesh.vertices)
         {
-            //Instantiate<GameObject>(_test, v + new Vector3(transform.position.x * transform.localScale.x, transform.position.y * transform.localScale.y, transform.position.z * transform.localScale.z), transform.rotation);
+            
         }
     }
 }

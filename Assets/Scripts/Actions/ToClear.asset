@@ -11,9 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1bf471208504942af60cb2fa943bd8, type: 3}
   m_Name: ToClear
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
-  _name: 
-  _description: 
-  _newMat: {fileID: 0}
-  _defaultMat: {fileID: 0}
-  _applied: 0
+  _sprite: {fileID: 21300000, guid: 259d83cb00ac16d4d8aea0da6bbe4e44, type: 3}
+  _name: Clear Material
+  _description: Change shader to clear
+  _newMat: {fileID: 2100000, guid: b62e5175c785df345953c43dd974b05c, type: 2}
