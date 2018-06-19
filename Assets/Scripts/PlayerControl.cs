@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControl : MonoBehaviour, IHitable {
     private CharacterController _controller;
@@ -15,6 +15,16 @@ public class PlayerControl : MonoBehaviour, IHitable {
     private int _hitIndex = 1;
     private float _hitTimer = 0;
     public float _hitCooldown = 2;
+    private static GameObject _attached;
+
+    public UnityEvent _onActionChange;
+    public static GameObject Attached
+    {
+        get
+        {
+            return _attached;
+        }
+    }
 	// Use this for initialization
 	void Start () {
         _controller = GetComponent<CharacterController>();
@@ -139,5 +149,11 @@ public class PlayerControl : MonoBehaviour, IHitable {
     {
         _animator.SetInteger("HitNo", _hitIndex);
         Camera.main.GetComponent<BlurEffect>().HitBlur();
+    }
+    public void SetAttached(GameObject obj)
+    {
+            _attached = obj;
+            _onActionChange.Invoke();
+        
     }
 }

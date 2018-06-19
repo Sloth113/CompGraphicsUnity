@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93eabce6416c6d7469c5728650a31c5f, type: 3}
   m_Name: RigidToggle
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
-  _name: 
-  _description: 
+  _sprite: {fileID: 21300000, guid: 259d83cb00ac16d4d8aea0da6bbe4e44, type: 3}
+  _name: Toggle Rigid
+  _description: Toggle RigidBody on obj

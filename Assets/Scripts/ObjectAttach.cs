@@ -14,9 +14,10 @@ public class ObjectAttach : MonoBehaviour {
 
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         if (Input.GetMouseButtonDown(0) && _eventSys.IsPointerOverGameObject() == false)
         {
+            GetComponent<PlayerControl>().SetAttached(null);
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
@@ -29,9 +30,17 @@ public class ObjectAttach : MonoBehaviour {
         if (_obj)
         {
 
-            _currentTime = _currentTime > _connectTime ? _connectTime :_currentTime + Time.deltaTime;
+            _currentTime = _currentTime > _connectTime ? _connectTime : _currentTime + Time.deltaTime;
             _line.SetPosition(0, _connect.position);
-            _line.SetPosition(1, Vector3.Lerp(_connect.position, _obj.transform.position + _point, _currentTime/_connectTime));
+            _line.SetPosition(1, Vector3.Lerp(_connect.position, _obj.transform.position + _point, _currentTime / _connectTime));
+        }
+        if (_currentTime >= _connectTime)
+        {
+            GetComponent<PlayerControl>().SetAttached(_obj);
+        }
+        if (_obj == null)
+        {
+            _line.gameObject.SetActive(false);
         }
 
 
