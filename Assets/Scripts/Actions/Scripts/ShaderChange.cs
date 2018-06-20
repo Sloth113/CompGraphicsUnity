@@ -8,16 +8,19 @@ public class ShaderChange : Action {
     private bool _applied;
     public override void Apply(GameObject go)
     {
+        go.GetComponent<MeshRenderer>().material = _newMat;
+        /*
         if (!_applied)
         {
             if(_defaultMat == null)
                 _defaultMat = go.GetComponent<MeshRenderer>().material;
-            go.GetComponent<MeshRenderer>().material = _newMat;
+            
             _applied = true;
         }
         else
         {
             go.GetComponent<MeshRenderer>().material = _defaultMat;
         }
+        */
     }
 }

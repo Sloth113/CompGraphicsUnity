@@ -207,6 +207,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114307817306587084, guid: 074d1545d4c648046a3f4094ea70aa75,
+        type: 2}
+      propertyPath: _actions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4452133903315240, guid: 074d1545d4c648046a3f4094ea70aa75, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.42
@@ -249,6 +254,12 @@ Prefab:
       propertyPath: _attkCollider
       value: 
       objectReference: {fileID: 728567089}
+    - target: {fileID: 114307817306587084, guid: 074d1545d4c648046a3f4094ea70aa75,
+        type: 2}
+      propertyPath: _actions.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8850e135e492b2b4aa3c221d177ebd2f,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 135774350158034626, guid: 074d1545d4c648046a3f4094ea70aa75, type: 2}
     - {fileID: 135215925297714244, guid: 074d1545d4c648046a3f4094ea70aa75, type: 2}
@@ -6112,7 +6123,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2017571065}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2499d6e87f89594482ac4eba438a23a, type: 3}
   m_Name: 
@@ -6135,6 +6146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actions:
   - {fileID: 11400000, guid: 2aff5587d4cb2d047921377aed84027e, type: 2}
+  - {fileID: 11400000, guid: 8850e135e492b2b4aa3c221d177ebd2f, type: 2}
 --- !u!23 &2017571069
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6149,7 +6161,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 992e8368ab5141b40add5ec214bc9a60, type: 2}
+  - {fileID: 2100000, guid: e0961fc753ea8c8439b10468188c7590, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

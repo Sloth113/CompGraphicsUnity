@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: Noise
   _description: Mod mesh with noise
   detail: 100
+  disPlaceAmt: 0.1
