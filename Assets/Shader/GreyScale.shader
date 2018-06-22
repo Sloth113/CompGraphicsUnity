@@ -42,9 +42,9 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
-			float lum = (col.r + col.g + col.b) / 3;
-			// just invert the colors
-			//	col.rgb = 1 - col.rgb;
+				float lum = (col.r + col.g + col.b) / 4;
+				
+				
 				return fixed4(lum,lum,lum, 1);
 			}
 			ENDCG
