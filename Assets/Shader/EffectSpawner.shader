@@ -1,4 +1,6 @@
-﻿Shader "Custom/EffectSpawner" {
+﻿//Cycling texture shaders
+//Not used
+Shader "Custom/EffectSpawner" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}

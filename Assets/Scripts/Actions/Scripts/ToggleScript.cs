@@ -12,8 +12,7 @@ public class ToggleScript : Action
         public override void Apply(GameObject go)
         {
         //Use get compenent to find a component with the type of input script 
-        Debug.Log(_scriptType.name);
-
+        //Debug.Log(_scriptType.name);
         (go.GetComponent(_scriptType.name) as MonoBehaviour).enabled = !(go.GetComponent(_scriptType.name) as MonoBehaviour).enabled;
         }
     }

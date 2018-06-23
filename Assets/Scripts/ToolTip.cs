@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+/// <summary>
+/// Tooltip code modified to use a panel instead of an image background
+/// 
+/// </summary>
 public interface IToolTip
 {
     string GetInfo();
@@ -29,6 +33,7 @@ public class ToolTip : MonoBehaviour {
 
         Hide();
     }
+    //Show tip 
     public void Show(Vector3 position, string msg, IToolTip helper)
     {
         _currentHelper = helper;

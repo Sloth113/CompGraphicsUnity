@@ -1,4 +1,5 @@
-﻿Shader "Unlit/LaserBeam"
+﻿//Laser beam shader found online and modified uses sin, time to calc movement of laser effect
+Shader "Unlit/LaserBeam"
 {
 	Properties
 	{

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 259d83cb00ac16d4d8aea0da6bbe4e44, type: 3}
   _name: Move Up
-  _description: 'Move object up 5 units '
+  _description: Move object up 5 units for 3 seconds
   _move: {x: 0, y: 5, z: 0}
   _time: 1
   _returnDelay: 3

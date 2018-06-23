@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// IHitable for things that can be hit
+/// </summary>
 public interface IHitable
 {
     void Hit();
     void Hit(int amt);
    
 }
-
+/// <summary>
+/// Zombie controller uses Nav Mesh agent to move towards the target (usually player)
+/// Attacks if close enough and checks attack collider then
+/// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class ZombieController : MonoBehaviour, IHitable, IActions {
     private CharacterController _controller;
@@ -34,12 +39,16 @@ public class ZombieController : MonoBehaviour, IHitable, IActions {
         _controller = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _navAgent = GetComponent<NavMeshAgent>();
+        if (_target == null)
+            _target = FindTarget();
         _navAgent.SetDestination(_target.position);
 
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (_target == null)
+            _target = FindTarget();
         _navAgent.SetDestination(_target.position);
         //Vector3 moveDir = _target.position - transform.position;
         //transform.LookAt(_target);
@@ -63,7 +72,7 @@ public class ZombieController : MonoBehaviour, IHitable, IActions {
             _attkTimer += Time.deltaTime;
         
 	}
-
+    //Hit interface 
     public void Hit()
     {
         Hit(1);
@@ -76,6 +85,7 @@ public class ZombieController : MonoBehaviour, IHitable, IActions {
             Die();
         }
     }
+    //If dies play animation and the destroy self
     public void Die()
     {
         _animator.SetTrigger("Die");
@@ -84,7 +94,7 @@ public class ZombieController : MonoBehaviour, IHitable, IActions {
 
         Destroy(gameObject, 2);
     }
-
+    //IAction interface functions used 
     public List<Action> GetActions()
     {
         return _actions;
@@ -94,7 +104,7 @@ public class ZombieController : MonoBehaviour, IHitable, IActions {
     {
         act.Apply(gameObject);
     }
-
+    //Checks if attacking and something is not itself and attack cooldown is ok
     private void OnTriggerStay(Collider other)
     {
         if (_attacking && other.gameObject != gameObject && _attkTimer > _attkRate)
@@ -106,5 +116,14 @@ public class ZombieController : MonoBehaviour, IHitable, IActions {
                 _attkTimer = 0;
             }
         }
+    }
+    //Returns a target for the zomebie to go to (follows other zombies if not set to anything)
+    Transform FindTarget()
+    {
+        ZombieController[] zombies = FindObjectsOfType<ZombieController>();
+        foreach (ZombieController z in zombies)
+            if (z != this)
+                return z.transform;
+        return this.transform;
     }
 }

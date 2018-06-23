@@ -1,4 +1,4 @@
-﻿
+﻿//Raidal blur effect, samples pixels from point to center of screen. 
 Shader "FX/RadialBlur"
 {
 	Properties

@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// Uses 3D perlin noise to deform the mesh in a smooth way
+/// Calcs range and converts 0-1 values and range to 3D space of sphere
+/// </summary>
 [CreateAssetMenu(menuName = "Actions/NoiseMesh")]
 public class NoiseMesh : Action {
     public int detail = 100;
@@ -59,6 +63,7 @@ public class NoiseMesh : Action {
             vertices[i] += new Vector3( amt,amt, amt);
 
         }
+        //Reset values on mesh 
         mesh.vertices = vertices;
         mesh.uv = uvs;
         mesh.normals = normals;
@@ -66,7 +71,7 @@ public class NoiseMesh : Action {
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
-        
+        //Update collider
         collider.sharedMesh = mesh;
         
         filter.mesh = mesh;      

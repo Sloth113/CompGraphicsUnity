@@ -11,11 +11,9 @@ public class MeshDeform : MonoBehaviour {
     public GameObject _test;
     public float _pointSize = 0.1f;
     public float _deformAmount = 0.1f;
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
+
+	// Checks for input to see if the user clicked the sphere.
+    //If call hti at position
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
@@ -37,25 +35,29 @@ public class MeshDeform : MonoBehaviour {
         }
 
 	}
-
+    //Adds hit to list and recalc shape
     private void Hit(Vector3 pos)
     {
         _hitPoints.Add(pos);
         CalcShape();
     }
-
+    //Deforms mesh depending on hit locations.
     private void CalcShape()
     {
+        //Grab current mesh and collider
         MeshFilter filter = GetComponent<MeshFilter>();
         Mesh mesh = filter.mesh;
         MeshCollider collider = GetComponent<MeshCollider>();
 
 
-
+        //Easier use of variables
         Vector3[] vertices = mesh.vertices;
         Vector2[] uvs = mesh.uv;
         Vector3[] normals = mesh.normals;
 
+
+        //Was used for debuging 
+        /*
         float minX = vertices[0].x; float minY = vertices[0].y; float minZ = vertices[0].z; float maxX = vertices[0].x; float maxY = vertices[0].y; float maxZ = vertices[0].z;
 
         for (int i = 0; i < vertices.Length; i++)
@@ -73,9 +75,9 @@ public class MeshDeform : MonoBehaviour {
         float xRange = maxX - minX;
         float yRange = maxY - minY;
         float zRange = maxZ - minZ;
-
+        */
        // Debug.Log(Vector3.Magnitude((new Vector3(vertices[0].x * transform.localScale.x, vertices[0].y * transform.localScale.y, vertices[0].z * transform.localScale.z)) + transform.position - _hitPoints[0]));
-
+       //For each hit point check all vertices on shape to see if it was close enough, if so move vert towards center of shape. 
         for (int j = 0; j < _hitPoints.Count; j++) {
             for (int i = 0; i < vertices.Length; i++)
             {
@@ -89,6 +91,7 @@ public class MeshDeform : MonoBehaviour {
 
             }
         }
+        //Update mesh
         mesh.vertices = vertices;
         mesh.uv = uvs;
         mesh.normals = normals;
@@ -96,10 +99,10 @@ public class MeshDeform : MonoBehaviour {
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
-
+        //Replace colider
         collider.sharedMesh = mesh;
 
         filter.mesh = mesh;
-        _hitPoints.Clear();
+        _hitPoints.Clear();//Clear points 
     }
 }

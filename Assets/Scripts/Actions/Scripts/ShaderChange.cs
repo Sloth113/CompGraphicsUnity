@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// Change the shader to set material
+/// Used to toggle back to original material
+/// </summary>
 [CreateAssetMenu(menuName = "Actions/ShaderAction")]
 public class ShaderChange : Action {
     public Material _newMat;

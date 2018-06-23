@@ -1,18 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Simple post process attached to camera to render post process shader
+/// </summary>
 public class PostProcess : MonoBehaviour {
     public Material _materail;
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {

@@ -17,9 +17,7 @@ public class ObjectAttach : MonoBehaviour {
     public Transform _connect;
     public float _connectTime;
     public float _dist;
-
-
-
+    
     // Update is called once per frame
     void Update() {
         if (Input.GetMouseButtonDown(0) && _eventSys.IsPointerOverGameObject() == false)
@@ -28,6 +26,7 @@ public class ObjectAttach : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
+                //Hit something that has actions
                 if (hit.collider.gameObject.GetComponent<IActions>() != null)
                 {
                     _obj = hit.collider.gameObject;
@@ -39,6 +38,7 @@ public class ObjectAttach : MonoBehaviour {
                 }
             }
         }
+        //If attached, set line up
         if (_obj)
         {
 
@@ -47,10 +47,12 @@ public class ObjectAttach : MonoBehaviour {
            
             _line.SetPosition(1, Vector3.Lerp(_connect.position, _obj.transform.position + _point, _currentTime / _connectTime));
         }
+        //If connected
         if (_currentTime >= _connectTime)
         {
             GetComponent<PlayerControl>().SetAttached(_obj);
         }
+        //Disable line if nothing selected or selected destroyed
         if (_obj == null)
         {
             _line.gameObject.SetActive(false);

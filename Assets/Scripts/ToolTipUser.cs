@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
+/// <summary>
+/// Tooltip code to display helpful information
+/// </summary>
 public class ToolTipUser : MonoBehaviour
 {
     string message = "<b>Message</b>\nSub-message";

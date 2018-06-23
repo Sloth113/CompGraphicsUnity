@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Sets up multiple UIActions to be displayed dynamically depending on how many are there
+/// </summary>
 public class UIActionList : MonoBehaviour {
 
     public List<Action> actions = new List<Action>();

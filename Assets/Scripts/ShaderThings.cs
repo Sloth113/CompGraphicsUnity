@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// To test shaders timer variables
+/// </summary>
 public class ShaderThings : MonoBehaviour {
     public Renderer[] _renderers;
 	// Use this for initialization

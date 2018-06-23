@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// CoroutineManager and singleton approach
+/// Used in scriptable objects that require delay actions. 
+/// </summary>
 public class CoroutineManager : MonoBehaviour {
     public static CoroutineManager Instance;
 

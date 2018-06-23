@@ -1,4 +1,5 @@
-﻿Shader "Hidden/GreyScale"
+﻿//Grey scales the screen 
+Shader "Hidden/GreyScale"
 {
 	Properties
 	{
@@ -41,6 +42,7 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
+			//Average of colours ( I make it darker to highlight bright things)
 				fixed4 col = tex2D(_MainTex, i.uv);
 				float lum = (col.r + col.g + col.b) / 4;
 				

@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+/// <summary>
+/// Player controller for main character
+/// This was pulled and modified from pervious projects. 
+/// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControl : MonoBehaviour, IHitable {
-    private CharacterController _controller;
-    private Animator _animator;
-    public float _speed = 5;
-    public float _jumpForce = 10;
-    private float _jumpingVel = 0;
-    public bool _isGrounded = false;
-    private bool _jumping = false;
-    private float _dbugSpeed = 0;
-    private int _hitIndex = 1;
-    private float _hitTimer = 0;
-    public float _hitCooldown = 2;
-    private static GameObject _attached;
+    private CharacterController _controller; //Character controller for movement
+    private Animator _animator; //Animator
+    public float _speed = 5; //Character speed
+    public float _jumpForce = 10; //Jumping (not used)
+    private float _jumpingVel = 0; //
+    public bool _isGrounded = false; // 
+    private bool _jumping = false; //
+    private float _dbugSpeed = 0; //
+    private int _hitIndex = 1; //Hit index used for different animations. 
+    private float _hitTimer = 0; //Hit timer for dynamic animations. 
+    public float _hitCooldown = 2; //Hit cooldown for dynmaic animations
+    private static GameObject _attached; //Used for attached object set but other script.
 
     public UnityEvent _onActionChange;
+    //Public accessor for attached
     public static GameObject Attached
     {
         get
@@ -25,35 +30,51 @@ public class PlayerControl : MonoBehaviour, IHitable {
             return _attached;
         }
     }
-	// Use this for initialization
+    //Single player instance should only exist
+    private static PlayerControl _instance;
+    public static PlayerControl Instance{
+        get
+        {
+            return _instance;
+        }
+        }
+
 	void Start () {
+        //Singleton 
+        if(PlayerControl.Instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         _controller = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        //Make 5 check
+        //Make 5 check for grounded
         float disCheck = 0.1f;
-
+        //Raycasts down from center a distance, and then from 4 other points around the base of the character controller. 
         _isGrounded = Physics.Raycast(transform.position + _controller.center -(new Vector3(0,_controller.height/2,0)), -Vector3.up, disCheck);
         _isGrounded = _isGrounded || Physics.Raycast(transform.position + _controller.center + transform.forward * _controller.radius -(new Vector3(0,_controller.height/2,0)), -Vector3.up, disCheck);
         _isGrounded = _isGrounded || Physics.Raycast(transform.position + _controller.center + -transform.forward * _controller.radius -(new Vector3(0,_controller.height/2,0)), -Vector3.up, disCheck);
         _isGrounded = _isGrounded || Physics.Raycast(transform.position + _controller.center + -transform.right * _controller.radius -(new Vector3(0,_controller.height/2,0)), -Vector3.up, disCheck);
         _isGrounded = _isGrounded || Physics.Raycast(transform.position + _controller.center + -transform.right * _controller.radius -(new Vector3(0,_controller.height/2,0)), -Vector3.up, disCheck);
 
-
+        //Sprint speed
         float speed = _speed;
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed *= 2;
         }
-
+        //Forward direction of camera so input is relative to camera. 
         Vector3 camForward = Camera.main.transform.forward;
         camForward.y = 0;
         Vector3 camRight = Camera.main.transform.right;
         camForward.y = 0;
-        
+        //Input checks
         Vector3 move = new Vector3(0,0,0);
         Vector3 inputForward = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if (inputForward.magnitude > 0)
@@ -61,23 +82,25 @@ public class PlayerControl : MonoBehaviour, IHitable {
             transform.rotation = Quaternion.LookRotation(inputForward);
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y + transform.eulerAngles.y, transform.eulerAngles.z);
         }
-
+        //Movement amounts
         move += camForward.normalized * Input.GetAxis("Vertical") * speed; 
         move += camRight.normalized * Input.GetAxis("Horizontal") * speed;
         
         move += Physics.gravity;
 
         
-        
+        //Shoot (was going to be for interactions.
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _animator.SetTrigger("Shoot");
         }
+        //Manual hit
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             _animator.SetInteger("HitNo", _hitIndex);
             Camera.main.GetComponent<BlurEffect>().HitBlur();
         }
+        //Hit cycle checks
         if (_hitIndex > 0)
         {
             if (_hitTimer > _hitCooldown)
@@ -90,29 +113,32 @@ public class PlayerControl : MonoBehaviour, IHitable {
                 _hitTimer += Time.deltaTime;
             }
         }
+        //Zero downwards vel
         if(_isGrounded && move.y <= 0)
         {
             move.y = 0;
             _jumping = false;
         }
+        //Another sprint bit. not used
         if (Input.GetKey(KeyCode.LeftShift))
         {
             move *= 1.2f;
         }
 
 
-
+        //Set values;
         _dbugSpeed = move.magnitude / _speed;
         _animator.SetFloat("Speed", inputForward.magnitude);
         _controller.Move(transform.forward * inputForward.magnitude * _speed * Time.deltaTime);
 
         
     }
-    private void OnGUI()
-    {
-        GUI.TextArea(new Rect(10, 10, 40, 20), _dbugSpeed.ToString());
-    }
-    
+    //Was used to debug speed 
+    //private void OnGUI()
+    //{
+    //    GUI.TextArea(new Rect(10, 10, 40, 20), _dbugSpeed.ToString());
+    //}
+    //IK experiments
     private void OnAnimatorIK(int layerIndex)
     {
         Debug.Log("HI");
@@ -120,13 +146,15 @@ public class PlayerControl : MonoBehaviour, IHitable {
         _animator.SetLookAtWeight(1);
         _animator.SetLookAtPosition(camForward);
     }
-
+    //Called by animator to say what hit animation to use next
+    //i the index, look into animator for detail on what animation is played.
     public void SetHit(int i)
     {
         _hitIndex = i;
         _hitTimer = 0;
         _animator.SetInteger("HitNo", 0);
     }
+    //If the rigid body hits another object check if it has a rigid body, if so add force to it. (5 in this case)
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody body = hit.collider.attachedRigidbody;
@@ -136,24 +164,30 @@ public class PlayerControl : MonoBehaviour, IHitable {
             return;
 
         Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-        body.velocity = pushDir * 10;
+        body.velocity = pushDir * 5;
 
     }
-
+    //If hti call hit with '1 damage'
     public void Hit()
     {
         Hit(1);
     }
-
+    //If hit play animation and blur post process effect
     public void Hit(int amt)
     {
         _animator.SetInteger("HitNo", _hitIndex);
         Camera.main.GetComponent<BlurEffect>().HitBlur();
     }
+    //Set attached object for actions. 
     public void SetAttached(GameObject obj)
     {
             _attached = obj;
             _onActionChange.Invoke();
         
+    }
+    //Play aniation(UI)
+    public void Use()
+    {
+        _animator.SetTrigger("Shoot");
     }
 }

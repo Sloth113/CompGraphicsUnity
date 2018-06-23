@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Generator used to create perlin noise in 2D or 3D space
+/// Uses Mathf.PerlinNoise to generate a 2D array of floats
+/// </summary>
 public static class NoiseGenerator {
-    public static float[] Perlin1D()
-    {
-        return new float[1];
-    }
+   
     public static float[][] Perlin2D(int width, int height, Vector2 offset, float scale)
     {
         float[][] map = new float[width][];
@@ -33,6 +33,15 @@ public static class NoiseGenerator {
         
         return map;
     }
+    /// <summary>
+    /// 3D map uses Mathf on 3 axis to get smooth noise
+    /// </summary>
+    /// <param name="width">array size width</param>
+    /// <param name="height">array size height</param>
+    /// <param name="depth">array size depth</param>
+    /// <param name="offset">Used to get different noise with same values</param>
+    /// <param name="scale">Detail on noise</param>
+    /// <returns></returns>
     public static float[][][] Perlin3D(int width, int height, int depth, Vector3 offset, float scale)
     {
         float[][][] map = new float[width][][];
@@ -69,6 +78,7 @@ public static class NoiseGenerator {
 
         return map;
     }
+    //3D perlin point using 2D Math function. 
     private static float Perlin3DPoint(float x, float y, float z)
     {
         float AB = Mathf.PerlinNoise(x, y);

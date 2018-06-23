@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// UI action sets up UI element to display an action
+/// Set relevant Ui elements with data
+/// </summary>
 public class UIAction : MonoBehaviour, IToolTip {
 
     public Action action;

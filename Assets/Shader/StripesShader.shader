@@ -1,4 +1,5 @@
-﻿Shader "Custom/SurfaceShader" {
+﻿//Testing surface shading, moves texture over time and using frac cuts up texture
+Shader "Custom/SurfaceShader" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}

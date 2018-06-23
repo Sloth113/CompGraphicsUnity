@@ -173,7 +173,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4761903391724908}
   - component: {fileID: 137709017945743528}
-  - component: {fileID: 135215925297714244}
   m_Layer: 0
   m_Name: L Hand
   m_TagString: Untagged
@@ -455,7 +454,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4328964059571760}
   - component: {fileID: 137553094407711722}
-  - component: {fileID: 135774350158034626}
   m_Layer: 0
   m_Name: R Hand
   m_TagString: Untagged
@@ -676,9 +674,10 @@ GameObject:
   - component: {fileID: 143026216035550314}
   - component: {fileID: 114307817306587084}
   - component: {fileID: 195350773576122710}
+  - component: {fileID: 135631437523038462}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1318,32 +1317,22 @@ MonoBehaviour:
   _currentHp: 0
   _target: {fileID: 0}
   _attkRange: 0.8
+  _attkRate: 2
   _actions:
   - {fileID: 11400000, guid: 9fe5fdd7cdce3094f8a32e76791b476b, type: 2}
---- !u!135 &135215925297714244
+  _attkCollider: {fileID: 135631437523038462}
+--- !u!135 &135631437523038462
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1328978425168420}
+  m_GameObject: {fileID: 1979978192972504}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.21193701
-  m_Center: {x: -0.63595796, y: -0.04806657, z: 1.0857179}
---- !u!135 &135774350158034626
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1723055993789890}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.19958186
-  m_Center: {x: 0.63065946, y: -0.0451708, z: 1.0884138}
+  m_Radius: 0.37
+  m_Center: {x: 0, y: 1, z: 0.57}
 --- !u!137 &137010856236096532
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

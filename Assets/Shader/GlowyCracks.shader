@@ -1,4 +1,6 @@
-﻿Shader "Custom/GlowyCracks" {
+﻿//Shader that uses another texture to calc emission values
+//Makes it look like those bits are glowing. 
+Shader "Custom/GlowyCracks" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}

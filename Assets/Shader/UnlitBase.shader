@@ -1,5 +1,5 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+//Base unlit shaders, need to work out lighting 
 Shader "Unlit/UnlitBase"
 {
 	Properties

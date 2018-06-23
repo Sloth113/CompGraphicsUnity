@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.IO;
 
 namespace CUI
@@ -40,7 +40,7 @@ namespace CUI
         public iTween.EaseType m_easeType;
         public float m_alpha;//Used in FadeTo 
 
-
+        /*
         #region Menu&Creation
         public void CreateAsset()
         {
@@ -136,7 +136,7 @@ namespace CUI
 
         }
         #endregion
-
+        */
         public override void Apply(GameObject obj)
         {
             Apply(obj, 0);

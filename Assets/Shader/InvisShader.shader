@@ -1,4 +1,5 @@
-﻿Shader "Custom/InvisShader" {
+﻿//Transparent shader with rim colour. 
+Shader "Custom/InvisShader" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -38,12 +39,12 @@
 		UNITY_INSTANCING_BUFFER_END(Props)
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
-
+			//Get how much rim lighting there will be. Dot of view and normal
 			half rim = 1.0 - saturate(dot(normalize(IN.viewDir), o.Normal));
-
+			//Normal shading and UVs
 			o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
 			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
-			
+			//Transparent and 'shine' bit
 			o.Emission = _RimColor.rgb * pow(rim, _RimPower);
 			o.Alpha = rim;
 		}
